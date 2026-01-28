@@ -1,6 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #151312;
+  --primary-head-text: #ffffff;
+  --secondary-head-text: #353334;
+  --primary-content-text: #9C9DA0;
+  --secondary-content-text: #353334;
+  --primary-button-bg: #B53C00;
+  --primary-button-text: #ffffff;
+  --input-bg: #353334;
+  --primary-icon-color:#ffffff;
+  --secondary-icon-color:#B53C00;
 }
