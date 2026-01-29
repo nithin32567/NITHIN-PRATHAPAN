@@ -5,6 +5,7 @@
   --color-brand-text: #393632;
   --color-brand-accent: #393632;
   --color-brand-light: #F1F0ED;
+  --color-brand-hover: #393632;
 
   --font-sans: var(--font-sans), ui-sans-serif, system-ui;
   --font-mono: var(--font-mono), ui-monospace, SFMono-Regular;

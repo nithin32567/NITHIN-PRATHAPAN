@@ -12,6 +12,7 @@ const Hero = () => {
     const contentRef = useRef<HTMLDivElement | null>(null)
     const footerRef = useRef<HTMLDivElement | null>(null)
     const imageRef = useRef<HTMLDivElement | null>(null)
+    const buttonRef = useRef<HTMLButtonElement | null>(null)
 
     useEffect(() => {
         if (!tl.current) return
@@ -20,19 +21,29 @@ const Hero = () => {
         if (!words || words.length === 0) return
 
         tl.current
-            .fromTo(words,
-                { y: "100%", opacity: 0 },
-                { y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: "power4.out" },
+            .fromTo(containerRef.current,
+                { opacity: 0, y: 1000, borderRadius: "100%" },
+                { opacity: 1, y: 0, duration: 1.2, borderRadius: "0", ease: "power4.out" },
                 0.2
+            )
+            .fromTo(words,
+                { y: "110%", opacity: 0 },
+                { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" },
+                "-=0.4"
             )
             .fromTo(contentRef.current,
                 { y: 50, opacity: 0 },
                 { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
                 "-=0.8"
-            )
+               )
             .fromTo([imageRef.current, footerRef.current],
                 { y: 30, opacity: 0 },
                 { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" },
+                "-=0.5"
+            )
+            .fromTo(buttonRef.current,
+                { y: 30, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
                 "-=0.5"
             )
 
@@ -63,8 +74,12 @@ const Hero = () => {
                         <p className="text-sm md:text-base leading-relaxed font-medium">
                             Open to job opportunities worldwide. Passionate about building polished, intuitive, and thoughtful digital experiences that leave a mark.
                         </p>
-                        <button className="group mt-8 px-10 py-4 bg-brand-accent text-brand-light rounded-full text-xs font-mono tracking-[0.2em] uppercase transition-all hover:scale-105 active:scale-95">
-                            Contact ↗
+                        <button
+                            ref={buttonRef}
+                            className="group relative mt-8 px-10 py-4 bg-brand-text text-brand-light rounded-full text-xs font-mono tracking-[0.2em] uppercase overflow-hidden"
+                        >
+                            <span className="relative z-10 transition-colors duration-500 group-hover:text-brand-text italic font-bold">Contact ↗</span>
+                            <div className="absolute top-[100%] left-[-10%] w-[120%] h-[300%] bg-brand-light rounded-[100%] transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:top-[-100%]" />
                         </button>
                     </div>
                 </div>
