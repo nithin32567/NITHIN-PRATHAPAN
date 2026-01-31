@@ -35,7 +35,7 @@ const Hero = () => {
                 { y: 50, opacity: 0 },
                 { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
                 "-=0.8"
-               )
+            )
             .fromTo([imageRef.current, footerRef.current],
                 { y: 30, opacity: 0 },
                 { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" },
@@ -58,6 +58,7 @@ const Hero = () => {
                 <div className="relative">
                     <h1
                         ref={headingRef}
+                        data-cursor="big"
                         className="text-[13vw] md:text-[10vw] font-bold leading-[0.85] tracking-tighter uppercase whitespace-nowrap flex flex-col md:flex-row"
                     >
                         <div className="overflow-hidden">
@@ -78,7 +79,7 @@ const Hero = () => {
                             ref={buttonRef}
                             className="group relative mt-8 px-10 py-4 bg-brand-text text-brand-light rounded-full text-xs font-mono tracking-[0.2em] uppercase overflow-hidden"
                         >
-                            <span className="relative z-10 transition-colors duration-500 group-hover:text-brand-text italic font-bold">Contact ↗</span>
+                            <span className="relative z-10 transition-colors duration-500 group-hover:text-brand-text italic font-bold cursor-pointer">Contact ↗</span>
                             <div className="absolute top-[100%] left-[-10%] w-[120%] h-[300%] bg-brand-light rounded-[100%] transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:top-[-100%]" />
                         </button>
                     </div>

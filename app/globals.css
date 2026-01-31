@@ -15,7 +15,6 @@
   body {
     @apply bg-brand-bg text-brand-text font-sans antialiased;
     background-color: #E8E8E3;
-    /* Fallback */
     color: #393632;
   }
 }

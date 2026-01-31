@@ -2,6 +2,7 @@ import './globals.css'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import { GsapProvider } from './context/gsapContext'
 import Footer from './components/layout/Footer'
+import CustomCursor from './components/layout/CustomCursor'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${mono.variable}`}>
       <body className="font-sans">
         <GsapProvider>
+          <CustomCursor />
           {children}
           <Footer />
         </GsapProvider>
