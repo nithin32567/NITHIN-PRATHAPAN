@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from 'next/font/google'
 import { GsapProvider } from './context/gsapContext'
 import Footer from './components/layout/Footer'
 import CustomCursor from './components/layout/CustomCursor'
+import SmoothScroll from './components/layout/SmoothScroll'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -23,9 +24,11 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${mono.variable}`}>
       <body className="font-sans">
         <GsapProvider>
-          <CustomCursor />
-          {children}
-          <Footer />
+          <SmoothScroll>
+            <CustomCursor />
+            {children}
+            <Footer />
+          </SmoothScroll>
         </GsapProvider>
       </body>
     </html>

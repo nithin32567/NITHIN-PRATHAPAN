@@ -1,5 +1,6 @@
 import React from 'react'
 import Hero from './components/home/hero'
+import SelectedWorks from './components/home/SelectedWorks'
 
 const page = () => {
 
@@ -8,6 +9,7 @@ const page = () => {
     <div className='bg-black'>
       <div>
         <Hero />
+        <SelectedWorks />
       </div>
     </div>
   )
