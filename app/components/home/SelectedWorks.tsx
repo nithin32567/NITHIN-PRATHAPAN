@@ -33,7 +33,7 @@ const projects = [
     },
     {
         title: 'Synnefo-website',
-        category: 'Product Design',
+        category: 'Development / Design / SEO',
         year: '2024',
         description: 'Official corporate website of Synnefo Solutions, designed to represent the brand’s identity and showcase its services, products, and expertise. The site provides a professional and user-friendly experience, featuring clear navigation, service highlights, company information, and contact capabilities.',
         color: '#252525', // Even lighter
@@ -103,6 +103,7 @@ export default function SelectedWorks() {
                     <div
                         key={index}
                         className="project-card sticky top-0 w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden"
+                        data-cursor-text="Explore"
                         style={{
                             backgroundColor: project.color,
                             zIndex: index + 1
@@ -135,7 +136,11 @@ export default function SelectedWorks() {
                                 </div>
 
                                 <div className="mt-12 md:mt-0">
-                                    <button onClick={() => window.open(project.link, '_blank')} className="group flex items-center gap-2 text-lg font-medium hover:text-gray-300 transition-colors">
+                                    <button 
+                                        onClick={() => window.open(project.link, '_blank')} 
+                                        className="group flex items-center gap-2 text-lg font-medium hover:text-gray-300 transition-colors"
+                                        data-cursor-text="Visit"
+                                    >
                                         View Project
                                         <div className="bg-white text-black rounded-full p-2 group-hover:scale-110 transition-transform duration-300">
                                             <ArrowUpRight size={20} />
@@ -146,7 +151,7 @@ export default function SelectedWorks() {
 
                             {/* Right Column: Visual */}
                             <div className="flex-1 h-[50vh] md:h-auto md:py-24 flex items-center justify-center relative">
-                                <div className="relative w-full aspect-square md:aspect-[4/3] rounded-sm overflow-hidden border border-white/10 group">
+                                <div className="relative w-full aspect-square md:aspect-[4/3] rounded-sm overflow-hidden border border-white/10 group shadow-2xl">
                                     {/* Placeholder for the image/video */}
                                     <Image
                                         src={project.image}
