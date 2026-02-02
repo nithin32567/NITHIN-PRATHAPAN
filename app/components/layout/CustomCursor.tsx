@@ -286,7 +286,7 @@ const CustomCursor = () => {
                 <div
                     key={i}
                     ref={el => {
-                        // @ts-ignore
+
                         trailRefs.current[i] = el
                     }}
                     className="fixed top-0 left-0 rounded-full bg-white mix-blend-difference pointer-events-none will-change-transform"

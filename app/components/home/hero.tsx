@@ -1,8 +1,9 @@
 "use client"
 
 import React, { useEffect, useRef } from 'react'
-import Image from 'next/image'
+
 import Navbar from '../layout/Navbar'
+import ProfileCard from './ProfileCard'
 import { useGsapTimeline } from '@/app/context/gsapContext'
 
 const Hero = () => {
@@ -80,7 +81,7 @@ const Hero = () => {
                             className="group relative mt-8 px-10 py-4 bg-brand-text text-brand-light rounded-full text-xs font-mono tracking-[0.2em] uppercase overflow-hidden"
                         >
                             <span className="relative z-10 transition-colors duration-500 group-hover:text-brand-text italic font-bold cursor-pointer">Contact ↗</span>
-                            <div className="absolute top-[100%] left-[-10%] w-[120%] h-[300%] bg-brand-light rounded-[100%] transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:top-[-100%]" />
+                            <div className="absolute top-full left-[-10%] w-[120%] h-[300%] bg-brand-light rounded-[100%] transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-top-full" />
                         </button>
                     </div>
                 </div>
@@ -91,15 +92,14 @@ const Hero = () => {
             >
                 <div className="hidden md:block"></div>
 
-                <div ref={imageRef} className="flex justify-center">
-                    <div className="relative w-32 h-32 md:w-44 md:h-44 grayscale hover:grayscale-0 transition-all duration-500 rounded-2xl overflow-hidden border border-brand-text/10 shadow-xl">
-                        <Image
-                            src="/imgprof.jpeg"
-                            alt="Nithin Prathapan"
-                            fill
-                            className="object-cover"
-                        />
-                    </div>
+                <div ref={imageRef} className="flex justify-center w-full">
+                    <ProfileCard
+                        avatarUrl="/imgprog.jpeg"
+                        name=""
+                        title=""
+                        handle="nithin_prathapan"
+                        className="max-w-[300px] md:max-w-[360px]"
+                    />
                 </div>
 
                 <div ref={footerRef} className="text-center md:text-right">

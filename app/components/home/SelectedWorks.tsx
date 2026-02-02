@@ -136,8 +136,8 @@ export default function SelectedWorks() {
                                 </div>
 
                                 <div className="mt-12 md:mt-0">
-                                    <button 
-                                        onClick={() => window.open(project.link, '_blank')} 
+                                    <button
+                                        onClick={() => window.open(project.link, '_blank')}
                                         className="group flex items-center gap-2 text-lg font-medium hover:text-gray-300 transition-colors"
                                         data-cursor-text="Visit"
                                     >

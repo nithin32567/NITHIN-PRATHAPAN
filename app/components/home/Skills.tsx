@@ -11,7 +11,11 @@ import {
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Server, Workflow, Rocket, Shield, Database, Repeat, Globe } from 'lucide-react';
+import { Server, Workflow, Rocket, Shield, Database, Repeat, Globe, Kanban, Users } from 'lucide-react';
+import DotGrid from '../react-bits/DotGrid';
+
+import java from '@/public/java.png'
+import vscode from "@/public/vscode.png"
 
 const skills = [
     { name: 'React.js', color: '#61dafb', icon: 'react' },
@@ -24,23 +28,43 @@ const skills = [
     { name: 'CSS', color: '#1572B6', icon: 'CSS' },
     { name: 'Tailwind', color: '#06B6D4', icon: 'tailwindcss' },
     { name: 'Python', color: '#3776ab', icon: 'python' },
+    { name: 'C', color: '#00599c', icon: 'c' },
     { name: 'C++', color: '#00599c', icon: 'cplusplus' },
+
     { name: 'Docker', color: '#2496ed', icon: 'docker' },
+
     { name: 'Linux', color: '#FCC624', icon: 'linux' },
     { name: 'Ubuntu', color: '#E95420', icon: 'ubuntu' },
+    { name: "VS CODE", color: "#00C7B7", icon: vscode },
+    { name: "AGILE", color: "#00C7B7", icon: Kanban },
+    { name: "SCRUM", color: "#00C7B7", icon: Users },
+    { name: "SHADCN", color: "#00C7B7", icon: "shadcnui" },
+    { name: 'Material UI', color: '#00C7B7', icon: 'mui' },
+    { name: 'GOLANG', color: '#00C7B7', icon: 'go' },
     // { name: 'AWS', color: '#FF9900', icon: 'aws' },
+    { name: 'GSAP', color: '#00C7B7', icon: 'gsap' },
+    { name: 'Framer Motion', color: '#00C7B7', icon: 'framer' },
+    { name: 'Bootstrap', color: '#00C7B7', icon: 'bootstrap' },
+    { name: 'JQuery', color: '#00C7B7', icon: 'jquery' },
+    { name: 'Vite', color: '#00C7B7', icon: 'vite' },
+    { name: 'Webpack', color: '#00C7B7', icon: 'webpack' },
     { name: 'Vercel', color: '#ffffff', icon: 'vercel' },
     { name: 'Netlify', color: '#00C7B7', icon: 'netlify' },
+    { name: 'Firebase', color: '#00C7B7', icon: 'firebase' },
+
     { name: 'Git', color: '#F05032', icon: 'git' },
     { name: 'GitHub', color: '#ffffff', icon: 'github' },
     { name: 'Bitbucket', color: '#0052CC', icon: 'bitbucket' },
     { name: 'CI/CD', color: '#3b82f6', icon: Workflow },
     { name: 'API Dev', color: '#ff6c37', icon: Server },
     { name: 'Postman', color: '#ff6c37', icon: 'postman' },
+
     // { name: 'ChatGPT', color: '#74AA9C', icon: 'chatgpt' },
     { name: 'Antigravity', color: '#8B5CF6', icon: Rocket },
     { name: 'Redux', color: '#764ABC', icon: 'redux' },
+
     { name: 'TypeScript', color: '#3178C6', icon: 'typescript' },
+
     { name: 'Jest', color: '#C21325', icon: 'jest' },
     { name: 'JWT', color: '#D63AFF', icon: Shield },
     { name: 'NPM', color: '#CB3837', icon: 'npm' },
@@ -52,11 +76,13 @@ const skills = [
     { name: 'Nginx', color: '#009639', icon: 'nginx' },
     { name: 'Jira', color: '#0052CC', icon: 'jirasoftware' },
     { name: 'SDLC', color: '#FF9900', icon: Repeat },
+    { name: 'Java', color: '#007396', icon: java },
+
     // { name: 'Java', color: '#007396', icon: 'java' },
     { name: 'REST', color: '#61dafb', icon: Globe },
 ];
 
-function SkillNode({ name, color, icon, position, index, total, ...props }: { name: string, color: string, icon: string | any, position: [number, number, number], index: number, total: number }) {
+function SkillNode({ name, color, icon, position, index, total, ...props }: { name: string, color: string, icon: string | React.ComponentType<{ size: number }> | { src: string }, position: [number, number, number], index: number, total: number }) {
     const meshRef = useRef<THREE.Mesh>(null);
     const [hovered, setHovered] = useState(false);
 
@@ -74,8 +100,13 @@ function SkillNode({ name, color, icon, position, index, total, ...props }: { na
         }
     });
 
-    const IconComp = typeof icon !== 'string' ? icon : null;
-    const iconUrl = typeof icon === 'string' ? `https://cdn.simpleicons.org/${icon}/${color.replace('#', '')}` : null;
+    const isImageIcon = typeof icon === 'object' && icon !== null && 'src' in icon;
+    const IconComp = typeof icon === 'function' ? icon : null;
+    const iconUrl = typeof icon === 'string'
+        ? `https://cdn.simpleicons.org/${icon}/${color.replace('#', '')}`
+        : isImageIcon
+            ? icon.src
+            : null;
 
     return (
         <Float speed={2} rotationIntensity={1} floatIntensity={1}>
@@ -158,7 +189,7 @@ function SkillCloud() {
                         total={skills.length}
                         name={skill.name}
                         color={skill.color}
-                        icon={skill.icon}
+                        icon={skill?.icon === 'java' ? java : skill?.icon === 'visualstudiocode' ? vscode : skill?.icon}
                         position={[x, y, z]}
                     />
                 );
@@ -197,7 +228,7 @@ export default function Skills() {
                     TECH <br />
                     <span className="text-gray-500">SKILLS</span>
                 </h2>
-                <div className="h-px w-full bg-white/20 mt-8"></div>
+                {/* <div className="h-px w-full bg-white/20 mt-8"></div> */}
                 <div className="flex justify-between text-sm uppercase tracking-widest mt-4 text-gray-400">
                     <span>(Expertise)</span>
                     <span>Tools — Technologies</span>
@@ -205,8 +236,23 @@ export default function Skills() {
             </div>
 
             <div className="absolute inset-0 z-0">
-                <Canvas shadows gl={{ antialias: true, alpha: true }} style={{ background: 'black' }}>
-                    <PerspectiveCamera makeDefault position={[0, 0, 15]} fov={60} />
+                <div className="absolute inset-0 z-[-1]">
+                    <DotGrid
+                        dotSize={4}
+                        gap={22}
+                        baseColor="#021740"
+                        activeColor="#ffe53d"
+                        proximity={200}
+                        speedTrigger={100}
+                        shockRadius={200}
+                        shockStrength={1}
+                        maxSpeed={200}
+                        resistance={800}
+                        returnDuration={1}
+                    />
+                </div>
+                <Canvas shadows gl={{ antialias: true, alpha: true }} style={{ background: 'transparent' }}>
+                    <PerspectiveCamera makeDefault position={[0, 0, 15]} fov={55} />
                     {/* <ambientLight intensity={0.5} /> */}
                     <pointLight position={[10, 10, 10]} intensity={1} />
                     <spotLight position={[-10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
