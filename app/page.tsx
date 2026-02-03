@@ -3,6 +3,8 @@ import Hero from './components/home/hero'
 import SelectedWorks from './components/home/SelectedWorks'
 import Skills from './components/home/Skills'
 import Services from './components/home/Services'
+import Experience from './components/Experience'
+import Contact from './components/home/Contact'
 
 const page = () => {
 
@@ -14,6 +16,8 @@ const page = () => {
         <SelectedWorks />
         <Skills />
         <Services />
+        <Experience />
+        <Contact />
       </div>
     </div>
   )

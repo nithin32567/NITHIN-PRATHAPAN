@@ -1,7 +1,7 @@
 import './globals.css'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import { GsapProvider } from './context/gsapContext'
-import Footer from './components/layout/Footer'
+// import Footer from './components/layout/Footer'
 import CustomCursor from './components/layout/CustomCursor'
 import SmoothScroll from './components/layout/SmoothScroll'
 
@@ -27,7 +27,7 @@ export default function RootLayout({
           <SmoothScroll>
             <CustomCursor />
             {children}
-            <Footer />
+            {/* <Footer /> */}
           </SmoothScroll>
         </GsapProvider>
       </body>
