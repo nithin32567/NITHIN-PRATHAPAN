@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 'use client';
-import { useEffect, useRef, useState, useMemo, type RefObject } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { Canvas, extend, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import { useTexture, Environment, Lightformer } from '@react-three/drei';
 import { BallCollider, CuboidCollider, Physics, RigidBody, type RapierRigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier';
@@ -12,29 +12,7 @@ import lanyardTexture from '../assets/lanyard/lanyard.png';
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 
-declare global {
-    // eslint-disable-next-line @typescript-eslint/no-namespace
-    namespace JSX {
-        interface IntrinsicElements {
-            meshLineGeometry: {
-                points?: THREE.Vector3[] | Float32Array | number[];
-                ref?: RefObject<any>;
-            };
-            meshLineMaterial: {
-                transparent?: boolean;
-                opacity?: number;
-                color?: string | THREE.Color;
-                depthTest?: boolean;
-                resolution?: [number, number];
-                useMap?: boolean;
-                map?: THREE.Texture;
-                repeat?: [number, number];
-                lineWidth?: number;
-                ref?: RefObject<any>;
-            };
-        }
-    }
-}
+// Local JSX namespace removed in favor of global types in types.d.ts
 
 interface LanyardProps {
     position?: [number, number, number];
@@ -89,7 +67,7 @@ interface BandProps {
 }
 
 function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
-    const band = useRef<THREE.Mesh<any, any>>(null);
+    const band = useRef<THREE.Mesh<MeshLineGeometry, MeshLineMaterial>>(null);
     const fixed = useRef<RapierRigidBody>(null!);
     const j1 = useRef<RapierRigidBody>(null!);
     const j2 = useRef<RapierRigidBody>(null!);
@@ -225,18 +203,16 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
                 </RigidBody>
             </group>
             <mesh ref={band}>
-                {/* @ts-ignore */}
                 <meshLineGeometry />
-                {/* @ts-ignore */}
                 <meshLineMaterial
                     transparent
                     opacity={1}
                     color="white"
                     depthTest={false}
-                    resolution={[width, height]}
+                    resolution={new THREE.Vector2(width, height)}
                     useMap
                     map={texture}
-                    repeat={[-1, 1]}
+                    repeat={new THREE.Vector2(-1, 1)}
                     lineWidth={0.1}
                 />
             </mesh>

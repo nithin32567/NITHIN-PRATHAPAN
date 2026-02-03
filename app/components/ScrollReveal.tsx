@@ -75,11 +75,11 @@ const ScrollReveal = ({
             {
                 ease: 'none',
                 opacity: 1,
-                stagger: 0.05,
+                stagger: 0.5,
                 scrollTrigger: {
                     trigger: el,
                     scroller,
-                    start: 'top bottom-=20%',
+                    start: 'top bottom-=50%',
                     end: wordAnimationEnd,
                     scrub: true
                 }
@@ -97,7 +97,7 @@ const ScrollReveal = ({
                     scrollTrigger: {
                         trigger: el,
                         scroller,
-                        start: 'top bottom-=20%',
+                        start: 'top bottom-=40%',
                         end: wordAnimationEnd,
                         scrub: true
                     }
@@ -112,7 +112,7 @@ const ScrollReveal = ({
 
     return (
         <h2 ref={containerRef} className={`my-5 ${containerClassName}`}>
-            <p className={`text-[clamp(1.6rem,4vw,3rem)] leading-normal font-semibold ${textClassName}`}>{splitText}</p>
+            <p className={`text-[clamp(1.6rem,4vw,3rem)] leading-normal font-semibold text-amber-300 ${textClassName}`}>{splitText}</p>
         </h2>
     );
 };

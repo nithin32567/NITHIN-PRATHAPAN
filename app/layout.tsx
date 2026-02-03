@@ -4,6 +4,15 @@ import { GsapProvider } from './context/gsapContext'
 // import Footer from './components/layout/Footer'
 import CustomCursor from './components/layout/CustomCursor'
 import SmoothScroll from './components/layout/SmoothScroll'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Portfolio',
+  description: 'Portfolio Website',
+  icons: {
+    icon: '/imgprog.jpeg',
+  },
+}
 
 const inter = Inter({
   subsets: ['latin'],

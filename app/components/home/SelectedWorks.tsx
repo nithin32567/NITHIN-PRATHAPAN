@@ -82,7 +82,7 @@ export default function SelectedWorks() {
     }, []);
 
     return (
-        <section ref={containerRef} className="relative w-full bg-black text-white py-20">
+        <section ref={containerRef} className="relative w-full bg-black text-white pt-20 pb-10">
 
             {/* Section Header */}
             <div className="container mx-auto px-4 mb-20">
@@ -172,8 +172,6 @@ export default function SelectedWorks() {
                 ))}
             </div>
 
-            {/* Spacer for bottom flow */}
-            <div className="h-[20vh] bg-black"></div>
         </section>
     );
 }
