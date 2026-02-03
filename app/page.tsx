@@ -1,6 +1,7 @@
 import React from 'react'
 import Hero from './components/home/hero'
 import SelectedWorks from './components/home/SelectedWorks'
+import About from './components/home/About'
 import Skills from './components/home/Skills'
 import Services from './components/home/Services'
 import Experience from './components/Experience'
@@ -13,11 +14,20 @@ const page = () => {
     <div className='bg-black'>
       <div>
         <Hero />
-        <SelectedWorks />
-        <Skills />
-        <Services />
+        <section id="works">
+          <SelectedWorks />
+        </section>
+        <section id="about">
+          <About />
+          <Skills />
+        </section>
+        <section id="services">
+          <Services />
+        </section>
         <Experience />
-        <Contact />
+        <section id="contact">
+          <Contact />
+        </section>
       </div>
     </div>
   )

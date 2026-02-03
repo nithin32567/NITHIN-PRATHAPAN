@@ -39,6 +39,10 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-brand-bg text-brand-text font-sans antialiased;
     background-color: #E8E8E3;

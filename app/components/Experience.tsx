@@ -73,7 +73,7 @@ const Experience = () => {
     }, []);
 
     return (
-        <section id="experience" ref={containerRef} className="relative w-full min-h-screen bg-gray-950 text-white py-24 overflow-hidden z-20 border-t border-white/10">
+        <section id="experience" ref={containerRef} className="relative w-full min-h-screen bg-gray-950 text-white py-12 md:py-24 overflow-hidden z-20 border-t border-white/10">
 
             {/* Background Gradients from Services.tsx style */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0">
@@ -87,7 +87,7 @@ const Experience = () => {
             <div className="container mx-auto px-4 relative z-10">
                 {/* Section Header matching Services.tsx */}
                 <div className="mb-20">
-                    <h2 ref={titleRef} className="text-6xl md:text-[8rem] font-bold leading-none tracking-tighter mb-4 opacity-0">
+                    <h2 ref={titleRef} className="text-5xl md:text-[8rem] font-bold leading-none tracking-tighter mb-4 opacity-0">
                         MY <br />
                         <span className="text-gray-500">EXPERIENCE</span>
                     </h2>
@@ -139,7 +139,7 @@ const Experience = () => {
                                     </div>
                                     <div className="flex flex-col sm:flex-row sm:items-baseline border-b border-white/5 pb-2 last:border-0 last:pb-0">
                                         <span className="text-blue-400 mr-2 text-sm font-mono uppercase tracking-wider min-w-[120px] mb-1 sm:mb-0">
-                                            {exp.location } 
+                                            {exp.location}
                                         </span>
                                         <span className="text-gray-400 text-sm">
                                             {exp.worktype}

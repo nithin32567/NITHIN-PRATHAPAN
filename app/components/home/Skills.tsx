@@ -82,7 +82,9 @@ const skills = [
     { name: 'REST', color: '#61dafb', icon: Globe },
 ];
 
-function SkillNode({ name, color, icon, position, index, total, ...props }: { name: string, color: string, icon: string | React.ComponentType<{ size: number }> | { src: string }, position: [number, number, number], index: number, total: number }) {
+// ... (imports remain)
+
+function SkillNode({ name, color, icon, position, index, total, ...props }: { name: string, color: string, icon: string | React.ComponentType<{ size: number; className?: string }> | { src: string }, position: [number, number, number], index: number, total: number }) {
     const meshRef = useRef<THREE.Mesh>(null);
     const [hovered, setHovered] = useState(false);
 
@@ -127,16 +129,16 @@ function SkillNode({ name, color, icon, position, index, total, ...props }: { na
                     style={{ pointerEvents: 'none' }}
                 >
                     <div
-                        className={`relative flex items-center justify-center w-24 h-24 transition-transform duration-300 ${hovered ? 'scale-125' : 'scale-100'}`}
+                        className={`relative flex items-center justify-center w-16 h-16 md:w-24 md:h-24 transition-transform duration-300 ${hovered ? 'scale-125' : 'scale-100'}`}
                         style={{ color: color }}
                     >
                         {iconUrl ? (
                             <img src={iconUrl} alt={name} className="w-full h-full object-contain" />
                         ) : IconComp ? (
-                            <IconComp size={96} />
+                            <IconComp size={96} className="w-12 h-12 md:w-24 md:h-24" />
                         ) : null}
 
-                        <div className={`absolute top-full mt-2 left-1/2 -translate-x-1/2 whitespace-nowrap bg-gray-900/80 px-2 py-1 rounded text-white text-xs font-mono tracking-widest uppercase transition-opacity duration-300 ${hovered ? 'opacity-100' : 'opacity-0'}`}>
+                        <div className={`absolute top-full mt-2 left-1/2 -translate-x-1/2 whitespace-nowrap bg-gray-900/80 px-2 py-1 rounded text-white text-[10px] md:text-xs font-mono tracking-widest uppercase transition-opacity duration-300 ${hovered ? 'opacity-100' : 'opacity-0'}`}>
                             {name}
                         </div>
                     </div>
@@ -147,11 +149,15 @@ function SkillNode({ name, color, icon, position, index, total, ...props }: { na
 }
 
 function Rig() {
-    const { camera, mouse } = useThree();
+    const { camera, mouse, size } = useThree();
     const vec = new THREE.Vector3();
 
+    // Adjust camera distance based on screen width
+    const isMobile = size.width < 768;
+    const distance = isMobile ? 22 : 15;
+
     return useFrame(() => {
-        camera.position.lerp(vec.set(mouse.x * 2, mouse.y * 2, 15), 0.05);
+        camera.position.lerp(vec.set(mouse.x * 2, mouse.y * 2, distance), 0.05);
         camera.lookAt(0, 0, 0);
     });
 }
@@ -163,14 +169,14 @@ function SkillCloud() {
     useFrame((state) => {
         if (groupRef.current) {
             // Slow rotation of the entire cloud
-            groupRef.current.rotation.y = state.clock.elapsedTime * 0.05;
+            groupRef.current.rotation.y = state.clock.elapsedTime * 0.09;
         }
     });
 
     return (
         <group ref={groupRef}>
             {/* Debug Cube - If this shows, R3F is working */}
-            <mesh position={[0, 0, 0]}>
+            <mesh position={[0, 0, 0]} visible={false}>
                 <boxGeometry args={[1, 1, 1]} />
                 <meshStandardMaterial color="red" wireframe />
             </mesh>
@@ -201,58 +207,71 @@ function SkillCloud() {
 export default function Skills() {
     const containerRef = useRef<HTMLElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
+    const [fov, setFov] = useState(50);
+
+    React.useEffect(() => {
+        const handleResize = () => {
+            setFov(window.innerWidth < 768 ? 65 : 50);
+        };
+
+        handleResize(); // Set initial value
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     React.useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
         if (titleRef.current) {
-            gsap.fromTo(titleRef.current,
-                { opacity: 0, y: 50 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1,
-                    scrollTrigger: {
-                        trigger: containerRef.current,
-                        start: "top 60%", // Trigger earlier
-                    }
+            gsap.from(titleRef.current, {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: "top 60%", // Trigger earlier
                 }
-            );
+            });
         }
     }, []);
 
     return (
-        <section ref={containerRef} className="relative w-full min-h-screen bg-black overflow-hidden py-24 z-20 border-t border-white/10">
+        <section ref={containerRef} className="relative w-full min-h-screen bg-black overflow-hidden py-12 md:py-24 z-20 border-t border-white/10">
+            {/* 1. Background Layer: DotGrid */}
+            <div className="absolute inset-0 z-0">
+                <DotGrid
+                    dotSize={2}
+                    gap={10}
+                    baseColor="#"
+                    activeColor="#ffe53d"
+                    proximity={150}
+                    speedTrigger={100}
+                    shockRadius={200}
+                    shockStrength={1000}
+                    maxSpeed={100}
+                    resistance={800}
+                    returnDuration={1}
+                />
+            </div>
+
+            {/* 2. Content Layer: Text */}
             <div className="container mx-auto px-4 relative z-10 pointer-events-none">
-                <h2 ref={titleRef} className="text-6xl md:text-[8rem] font-bold leading-none tracking-tighter mb-4 text-white opacity-0">
+                <h2 ref={titleRef} className="text-5xl md:text-[8rem] font-bold leading-none tracking-tighter mb-4 text-white">
                     TECH <br />
                     <span className="text-gray-500">SKILLS</span>
                 </h2>
                 {/* <div className="h-px w-full bg-white/20 mt-8"></div> */}
-                <div className="flex justify-between text-sm uppercase tracking-widest mt-4 text-gray-400">
+                <div className="flex justify-between text-xs md:text-sm uppercase tracking-widest mt-4 text-gray-400">
                     <span>(Expertise)</span>
                     <span>Tools — Technologies</span>
                 </div>
             </div>
 
-            <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 z-[-1]">
-                    <DotGrid
-                        dotSize={4}
-                        gap={22}
-                        baseColor="#021740"
-                        activeColor="#ffe53d"
-                        proximity={200}
-                        speedTrigger={100}
-                        shockRadius={200}
-                        shockStrength={1}
-                        maxSpeed={200}
-                        resistance={800}
-                        returnDuration={1}
-                    />
-                </div>
+            {/* 3. Foreground Layer: 3D Canvas */}
+            <div className="absolute inset-0 z-20">
                 <Canvas shadows gl={{ antialias: true, alpha: true }} style={{ background: 'transparent' }}>
-                    <PerspectiveCamera makeDefault position={[0, 0, 15]} fov={55} />
+                    <PerspectiveCamera makeDefault position={[0, 0, 15]} fov={fov} />
                     {/* <ambientLight intensity={0.5} /> */}
                     <pointLight position={[10, 10, 10]} intensity={1} />
                     <spotLight position={[-10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />

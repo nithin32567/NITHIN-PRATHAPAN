@@ -23,9 +23,9 @@ const Contact = () => {
     }, []);
 
     return (
-        <section className="relative min-h-[80vh] flex flex-col items-center justify-center bg-black overflow-hidden py-24">
+        <section className="relative min-h-[60vh] md:min-h-[80vh] flex flex-col items-center justify-center bg-black overflow-hidden py-12 md:py-24">
             {/* Background Orb */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px] h-[600px] pointer-events-none opacity-60 z-0">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px] h-[300px] md:h-[600px] pointer-events-none opacity-60 z-0">
                 <Orb
                     hoverIntensity={0.79}
                     rotateOnHover
@@ -37,9 +37,10 @@ const Contact = () => {
 
             <div className="container mx-auto px-4 z-10 relative flex flex-col items-center text-center">
 
-                {/* Open to Work Badge - Absolute positioned on larger screens */}
-                <div className="absolute top-0 right-4 md:right-20 md:-top-12 lg:right-32 flex items-center justify-center">
-                    <div className="relative w-32 h-32 md:w-40 md:h-40 flex items-center justify-center">
+                {/* Open to Work Badge */}
+                {/* On mobile: displayed in flow. On tablet+: absolute positioned */}
+                <div className="relative mb-8 md:mb-0 md:absolute md:right-20 md:-top-12 lg:right-32 flex items-center justify-center">
+                    <div className="relative w-24 h-24 md:w-40 md:h-40 flex items-center justify-center">
                         <svg
                             ref={circleTextRef}
                             className="w-full h-full absolute inset-0"
@@ -67,10 +68,10 @@ const Contact = () => {
         </div> */}
 
                 {/* Main Heading */}
-                <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-4 max-w-5xl">
+                <h2 className="text-3xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-4 max-w-5xl">
                     FROM IDEA TO EXECUTION
                 </h2>
-                <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white/90 tracking-tight mb-16 max-w-5xl">
+                <h2 className="text-3xl md:text-6xl lg:text-7xl font-bold text-white/90 tracking-tight mb-12 md:mb-16 max-w-5xl">
                     LET&apos;S BUILD SOMETHING REAL!
                 </h2>
 
@@ -78,9 +79,9 @@ const Contact = () => {
                 <div className="relative group">
                     <Link
                         href="mailto:nithinprathapan32567@gmail.com"
-                        className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full text-white transition-all duration-300 group-hover:px-10"
+                        className="inline-flex items-center justify-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full text-white transition-all duration-300 group-hover:px-8 md:group-hover:px-10"
                     >
-                        <span className="font-medium text-lg">Get in touch</span>
+                        <span className="font-medium text-base md:text-lg">Get in touch</span>
                         <span className="bg-white text-black p-1 rounded-full group-hover:rotate-45 transition-transform duration-300">
                             <ArrowUpRight size={16} />
                         </span>
@@ -88,9 +89,9 @@ const Contact = () => {
                 </div>
 
                 {/* Footer Text */}
-                <div className="mt-24 text-center space-y-2">
-                    <p className="text-white font-medium text-lg">Available for full-time roles and selective freelance projects.</p>
-                    <p className="text-gray-400 max-w-xl mx-auto">
+                <div className="mt-16 md:mt-24 text-center space-y-2">
+                    <p className="text-white font-medium text-base md:text-lg">Available for full-time roles and selective freelance projects.</p>
+                    <p className="text-gray-400 max-w-xl mx-auto text-sm md:text-base">
                         I focus on shipping clean, scalable web solutions that support real users and growing products.
                     </p>
                 </div>

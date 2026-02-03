@@ -55,12 +55,12 @@ const Hero = () => {
         <section ref={containerRef} className="relative min-h-screen flex flex-col bg-brand-bg text-brand-text overflow-hidden">
             <Navbar />
 
-            <div className="flex-1 flex flex-col justify-center px-6 md:px-12 pt-10 pb-20">
+            <div className="flex-1 flex flex-col justify-center px-4 sm:px-6 md:px-12 pt-20 pb-12 md:pb-20">
                 <div className="relative">
                     <h1
                         ref={headingRef}
                         data-cursor="big"
-                        className="text-[13vw] md:text-[10vw] font-bold leading-[0.85] tracking-tighter uppercase whitespace-nowrap flex flex-col md:flex-row"
+                        className="text-[15vw] md:text-[10vw] font-bold leading-[0.85] tracking-tighter uppercase whitespace-nowrap flex flex-col md:flex-row"
                     >
                         <div className="overflow-hidden">
                             <span className="block h-word">Nithin</span>
@@ -71,14 +71,14 @@ const Hero = () => {
                     </h1>
                 </div>
 
-                <div ref={contentRef} className="mt-12 md:mt-16 flex flex-col md:flex-row md:items-end gap-8 md:gap-24">
+                <div ref={contentRef} className="mt-8 md:mt-16 flex flex-col md:flex-row md:items-end gap-6 md:gap-24">
                     <div className="max-w-md">
                         <p className="text-sm md:text-base leading-relaxed font-medium">
                             Open to job opportunities worldwide. Passionate about building polished, intuitive, and thoughtful digital experiences that leave a mark.
                         </p>
                         <button
                             ref={buttonRef}
-                            className="group relative mt-8 px-10 py-4 bg-brand-text text-brand-light rounded-full text-xs font-mono tracking-[0.2em] uppercase overflow-hidden"
+                            className="group relative mt-6 md:mt-8 px-8 md:px-10 py-3 md:py-4 bg-brand-text text-brand-light rounded-full text-[10px] md:text-xs font-mono tracking-[0.2em] uppercase overflow-hidden"
                         >
                             <span className="relative z-10 transition-colors duration-500 group-hover:text-brand-text italic font-bold cursor-pointer">Contact ↗</span>
                             <div className="absolute top-full left-[-10%] w-[120%] h-[300%] bg-brand-light rounded-[100%] transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-top-full" />
@@ -88,7 +88,7 @@ const Hero = () => {
             </div>
 
             <div
-                className="grid grid-cols-1 md:grid-cols-3 items-end px-6 md:px-12 pb-12 w-full gap-8 md:gap-0"
+                className="grid grid-cols-1 md:grid-cols-3 items-end px-4 sm:px-6 md:px-12 pb-8 md:pb-12 w-full gap-8 md:gap-0"
             >
                 <div className="hidden md:block"></div>
 
@@ -98,7 +98,7 @@ const Hero = () => {
                         name=""
                         title=""
                         handle="nithin_prathapan"
-                        className="max-w-[300px] md:max-w-[360px]"
+                        className="max-w-[280px] md:max-w-[360px]"
                     />
                 </div>
 
@@ -110,7 +110,7 @@ const Hero = () => {
                         </span>
                         <span className="text-[10px] md:text-xs font-mono uppercase tracking-widest opacity-60">Status</span>
                     </div>
-                    <div className="text-lg md:text-2xl font-bold uppercase tracking-tight">
+                    <div className="text-base md:text-2xl font-bold uppercase tracking-tight">
                         Available for work
                     </div>
                 </div>

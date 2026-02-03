@@ -86,7 +86,7 @@ export default function SelectedWorks() {
 
             {/* Section Header */}
             <div className="container mx-auto px-4 mb-20">
-                <h2 className="text-6xl md:text-[8rem] font-bold leading-none tracking-tighter mb-4">
+                <h2 className="text-5xl md:text-[8rem] font-bold leading-none tracking-tighter mb-4">
                     SELECTED <br />
                     <span className="text-gray-500">WORKS</span>
                 </h2>
@@ -102,73 +102,72 @@ export default function SelectedWorks() {
                 {projects.map((project, index) => (
                     <div
                         key={index}
-                        className="project-card sticky top-0 w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden"
-                        data-cursor-text="Explore"
+                        className="project-card sticky top-0 w-full h-screen flex flex-col border-t border-white/20 overflow-hidden bg-black transition-all duration-500"
                         style={{
                             backgroundColor: project.color,
+                            top: `${index * 120}px`, // Increased offset to expose full header
                             zIndex: index + 1
                         }}
                     >
-                        {/* Card Content Container */}
-                        <div className="container mx-auto px-4 h-full flex flex-col md:flex-row relative">
+                        <div className="container mx-auto px-4 md:px-6 h-full relative flex flex-col pt-10">
 
-                            {/* Left Column: Index & Details */}
-                            <div className="flex-1 flex flex-col justify-between py-12 md:py-24 z-10">
-                                <div>
-                                    <span className="block text-8xl md:text-[12rem] font-bold leading-none opacity-20 select-none">
-                                        0{index + 1}
-                                    </span>
-                                    <h3 className="text-4xl md:text-6xl font-bold mt-4 md:mt-10 max-w-lg leading-tight">
-                                        {project.title}
-                                    </h3>
-                                    <p className="mt-6 text-lg text-gray-400 max-w-md">
-                                        {project.description}
-                                    </p>
+                            {/* Sticky Header Strip */}
+                            <div
+                                className="flex flex-row items-center gap-8 md:gap-16 mb-12 select-none h-[80px]"
+                            >
+                                <span className="text-6xl md:text-8xl font-bold leading-none text-white/40">
+                                    0{index + 1}
+                                </span>
+                                <h3 className="text-4xl md:text-7xl font-bold leading-none tracking-tight uppercase">
+                                    {project.title}
+                                </h3>
+                            </div>
 
-                                    <div className="flex gap-4 mt-8">
-                                        <span className="px-4 py-2 border border-white/20 rounded-full text-xs uppercase tracking-wider">
-                                            {project.category}
-                                        </span>
-                                        <span className="px-4 py-2 border border-white/20 rounded-full text-xs uppercase tracking-wider">
-                                            {project.year}
-                                        </span>
+                            {/* Main Content Body */}
+                            <div className="flex flex-col md:flex-row gap-8 md:gap-20 flex-1 overflow-hidden pb-10">
+                                {/* Left: Details */}
+                                <div className="flex-1 flex flex-col justify-start pt-4">
+                                    <div>
+                                        <p className="text-lg md:text-2xl text-gray-300 leading-relaxed max-w-xl">
+                                            {project.description}
+                                        </p>
+
+                                        <div className="flex flex-wrap gap-3 mt-8 md:mt-12">
+                                            <span className="px-4 py-2 border border-white/20 rounded-full text-sm uppercase tracking-wider bg-white/5 backdrop-blur-sm">
+                                                {project.category}
+                                            </span>
+                                            <span className="px-4 py-2 border border-white/20 rounded-full text-sm uppercase tracking-wider bg-white/5 backdrop-blur-sm">
+                                                {project.year}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-12">
+                                        <button
+                                            onClick={() => window.open(project.link, '_blank')}
+                                            className="group inline-flex items-center gap-3 text-xl font-medium hover:text-white transition-colors"
+                                        >
+                                            View Project
+                                            <div className="bg-white text-black rounded-full p-2 group-hover:scale-110 transition-transform duration-300">
+                                                <ArrowUpRight size={20} />
+                                            </div>
+                                        </button>
                                     </div>
                                 </div>
 
-                                <div className="mt-12 md:mt-0">
-                                    <button
-                                        onClick={() => window.open(project.link, '_blank')}
-                                        className="group flex items-center gap-2 text-lg font-medium hover:text-gray-300 transition-colors"
-                                        data-cursor-text="Visit"
-                                    >
-                                        View Project
-                                        <div className="bg-white text-black rounded-full p-2 group-hover:scale-110 transition-transform duration-300">
-                                            <ArrowUpRight size={20} />
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-
-                            {/* Right Column: Visual */}
-                            <div className="flex-1 h-[50vh] md:h-auto md:py-24 flex items-center justify-center relative">
-                                <div className="relative w-full aspect-square md:aspect-[4/3] rounded-sm overflow-hidden border border-white/10 group shadow-2xl">
-                                    {/* Placeholder for the image/video */}
+                                {/* Right: Image/Visual */}
+                                <div className="flex-1 relative w-full h-[40vh] md:h-auto md:max-h-[60vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl">
                                     <Image
                                         src={project.image}
                                         alt={project.title}
                                         fill
-                                        className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700"
+                                        className="object-cover w-full h-full hover:scale-105 transition-transform duration-700"
                                     />
-
-                                    {/* Overlay */}
-                                    <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+                                    {/* Subtle gradient overlay */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
                                 </div>
                             </div>
-
                         </div>
-
-                        {/* Divider Line at bottom of card */}
-                        <div className="absolute bottom-0 left-0 w-full h-[1px] bg-white/10"></div>
                     </div>
                 ))}
             </div>

@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useGsapTimeline } from '@/app/context/gsapContext'
+import StaggeredMenu from './StaggeredMenu'
 
 const NavLink = ({ href, label }: { href: string; label: string }) => {
   return (
@@ -19,32 +20,66 @@ const Navbar = () => {
   const tl = useGsapTimeline()
   const navbarRef = useRef<HTMLElement | null>(null)
 
+  const menuItems = [
+    { label: 'Services', link: '#services', ariaLabel: 'Go to Services' },
+    { label: 'Works', link: '#works', ariaLabel: 'Go to Works' },
+    { label: 'About', link: '#about', ariaLabel: 'Go to About' },
+    { label: 'Contact', link: '#contact', ariaLabel: 'Go to Contact' }
+  ];
+
+  const socialItems = [
+    { label: 'Twitter', link: 'https://twitter.com' },
+    { label: 'GitHub', link: 'https://github.com' },
+    { label: 'LinkedIn', link: 'https://linkedin.com' }
+  ];
+
   useEffect(() => {
     if (!tl.current) return
-    tl.current.fromTo(
-      navbarRef.current,
-      { opacity: 0, y: -20 },
-      { opacity: 1, y: 0, duration: 1, ease: "power4.out" },
-      0.5
-    )
+    if (navbarRef.current) {
+      tl.current.fromTo(
+        navbarRef.current,
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 1, ease: "power4.out" },
+        0.5
+      )
+    }
   }, [tl])
 
   return (
-    <nav
-      ref={navbarRef}
-      className='flex justify-between items-center px-6 md:px-12 py-8 w-full uppercase text-[10px] md:text-xs font-mono tracking-[0.2em]'
-    >
-      <div className="font-semibold">
-        Web Developer & Designer
-      </div>
+    <>
+      <nav
+        ref={navbarRef}
+        className='hidden md:flex justify-between items-center px-6 md:px-12 py-8 w-full uppercase text-[10px] md:text-xs font-mono tracking-[0.2em]'
+      >
+        <div className="font-semibold text-black">
+          Full Stack Developer
+        </div>
 
-      <div className='flex gap-4 md:gap-10'>
-        <NavLink href="#services" label="Services" />
-        <NavLink href="#works" label="Works" />
-        <NavLink href="#about" label="About" />
-        <NavLink href="#contact" label="Contact" />
+        <div className='flex gap-4 md:gap-10'>
+          <NavLink href="#services" label="Services" />
+          <NavLink href="#works" label="Works" />
+          <NavLink href="#about" label="About" />
+          <NavLink href="#contact" label="Contact" />
+        </div>
+      </nav>
+
+      <div className="md:hidden">
+        <StaggeredMenu
+          position="right"
+          items={menuItems}
+          socialItems={socialItems}
+          displaySocials={true}
+          displayItemNumbering={true}
+          menuButtonColor="#000000"
+          openMenuButtonColor="#000000"
+          changeMenuColorOnOpen={true}
+          colors={['#000000', '#000000']}
+          accentColor="#000000"
+          isFixed={true}
+          logoContent={<div className="font-mono text-[10px] tracking-[0.2em] font-semibold text-black uppercase pt-1">Full Stack Developer</div>}
+        />
       </div>
-    </nav>
+    </>
   )
 }
 

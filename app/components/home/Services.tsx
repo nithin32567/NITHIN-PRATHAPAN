@@ -101,7 +101,7 @@ export default function Services() {
     }, []);
 
     return (
-        <section ref={containerRef} className="relative w-full min-h-screen bg-black text-white py-24 z-20 border-t border-white/10">
+        <section ref={containerRef} className="relative w-full min-h-screen bg-black text-white py-12 md:py-24 z-20 border-t border-white/10">
 
             {/* Background Gradients */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0">
@@ -112,7 +112,7 @@ export default function Services() {
             <div className="container mx-auto px-4 relative z-10">
                 {/* Section Header */}
                 <div className="mb-20">
-                    <h2 ref={titleRef} className="text-6xl md:text-[8rem] font-bold leading-none tracking-tighter mb-4 opacity-0">
+                    <h2 ref={titleRef} className="text-5xl md:text-[8rem] font-bold leading-none tracking-tighter mb-4 opacity-0">
                         MY <br />
                         <span className="text-gray-500">SERVICES</span>
                     </h2>
