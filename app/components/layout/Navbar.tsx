@@ -28,9 +28,8 @@ const Navbar = () => {
   ];
 
   const socialItems = [
-    { label: 'Twitter', link: 'https://twitter.com' },
-    { label: 'GitHub', link: 'https://github.com' },
-    { label: 'LinkedIn', link: 'https://linkedin.com' }
+    { label: 'GitHub', link: 'https://github.com/nithin32567' },
+    { label: 'LinkedIn', link: 'https://www.linkedin.com/in/nithin-prathapan' }
   ];
 
   useEffect(() => {

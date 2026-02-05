@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 
 const CustomCursor = () => {
@@ -8,7 +8,7 @@ const CustomCursor = () => {
     const followerRef = useRef<HTMLDivElement>(null) // The large jelly blob
     const trailRefs = useRef<(HTMLDivElement | null)[]>([]) // The fluid trail
 
-    const [isHovered, setIsHovered] = useState(false)
+
 
     // Store the actual element to track its live position
     const hoverTarget = useRef<HTMLElement | null>(null)
@@ -261,10 +261,8 @@ const CustomCursor = () => {
 
             if (link) {
                 hoverTarget.current = link as HTMLElement
-                setIsHovered(true)
             } else {
                 hoverTarget.current = null
-                setIsHovered(false)
             }
         }
 
@@ -280,29 +278,30 @@ const CustomCursor = () => {
     }, [])
 
     return (
-        <div className="hidden lg:block fixed inset-0 pointer-events-none z-[9999]">
+        <div className="fixed inset-0 pointer-events-none z-[9999]">
             {/* Fluid Trail */}
             {Array.from({ length: 12 }).map((_, i) => (
                 <div
                     key={i}
-                    ref={el => {
-
-                        trailRefs.current[i] = el
-                    }}
-                    className="fixed top-0 left-0 rounded-full bg-white mix-blend-difference pointer-events-none will-change-transform"
+                    ref={
+                        el => {
+                            trailRefs.current[i] = el
+                        }
+                    }
+                    className="fixed top-0 left-0 rounded-full bg-white mix-blend-difference pointer-events-none will-change-transform opacity-0"
                 />
             ))}
 
             {/* The Jelly Blob (Follower) */}
             <div
                 ref={followerRef}
-                className="fixed top-0 left-0 border-[3px] border-white bg-white/20 pointer-events-none box-border will-change-transform mix-blend-difference"
+                className="fixed top-0 left-0 border-[3px] border-white bg-white/20 pointer-events-none box-border will-change-transform mix-blend-difference opacity-0"
             />
 
             {/* The Dot (Cursor) */}
             <div
                 ref={cursorRef}
-                className="fixed top-0 left-0 w-3 h-3 rounded-full bg-white pointer-events-none mix-blend-difference"
+                className="fixed top-0 left-0 w-3 h-3 rounded-full bg-white pointer-events-none mix-blend-difference opacity-0"
             />
         </div>
     )

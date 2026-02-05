@@ -38,7 +38,7 @@ const About = () => {
                     <ScrollReveal
                         baseOpacity={0.1}
                         enableBlur={true}
-                        baseRotation={24}
+                        baseRotation={0}
                         blurStrength={4}
                         textClassName="leading-relaxed"
                     >
