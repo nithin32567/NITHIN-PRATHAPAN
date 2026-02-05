@@ -251,10 +251,15 @@ const CustomCursor = () => {
 
         const onMouseOver = (e: MouseEvent) => {
             const target = e.target as HTMLElement
+
+            // Exclude buttons from cursor snapping/hover effect
+            if (target.closest('button') || target.closest('[role="button"]')) {
+                hoverTarget.current = null
+                return
+            }
+
             // Logic to detect interactive elements
             const link = target.closest('a') ||
-                target.closest('button') ||
-                target.closest('[role="button"]') ||
                 target.closest('input') ||
                 target.closest('.cursor-hover') ||
                 (window.getComputedStyle(target).cursor === 'pointer' && target.tagName !== 'HTML' && target.tagName !== 'BODY')

@@ -105,7 +105,7 @@ export default function SelectedWorks() {
                         className="project-card sticky top-0 w-full h-screen flex flex-col border-t border-white/20 overflow-hidden bg-black transition-all duration-500"
                         style={{
                             backgroundColor: project.color,
-                            top: `${index * 120}px`, // Increased offset to expose full header
+                            top: `${index * 150}px`, // Increased offset to expose full header
                             zIndex: index + 1
                         }}
                     >
@@ -113,7 +113,7 @@ export default function SelectedWorks() {
 
                             {/* Sticky Header Strip */}
                             <div
-                                className="flex flex-row items-center gap-8 md:gap-16 mb-12 select-none h-[80px]"
+                                className="flex flex-row items-center gap-8 md:gap-16 mb-12 select-none"
                             >
                                 <span className="text-6xl md:text-8xl font-bold leading-none text-white/40">
                                     0{index + 1}

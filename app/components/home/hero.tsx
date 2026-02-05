@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useEffect, useRef } from 'react'
+import { Github, Linkedin, Mail } from 'lucide-react'
 
 import Navbar from '../layout/Navbar'
 import ProfileCard from './ProfileCard'
@@ -83,6 +84,37 @@ const Hero = () => {
                             <span className="relative z-10 transition-colors duration-500 group-hover:text-brand-text italic font-bold cursor-pointer">Contact ↗</span>
                             <div className="absolute top-full left-[-10%] w-[120%] h-[300%] bg-brand-light rounded-[100%] transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-top-full" />
                         </button>
+
+                        <div className="flex items-center gap-6 mt-8">
+                            <a
+                                href="https://github.com/nithin32567"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-800 hover:text-black transition-colors animate-float"
+                                style={{ animationDelay: '0s' }}
+                                aria-label="GitHub"
+                            >
+                                <Github size={28} />
+                            </a>
+                            <a
+                                href="https://www.linkedin.com/in/nithin-prathapan"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[#0077b5] hover:opacity-80 transition-opacity animate-float"
+                                style={{ animationDelay: '0.2s' }}
+                                aria-label="LinkedIn"
+                            >
+                                <Linkedin size={28} />
+                            </a>
+                            <a
+                                href="mailto:nithinprathapan32567@gmail.com"
+                                className="text-[#EA4335] hover:opacity-80 transition-opacity animate-float"
+                                style={{ animationDelay: '0.4s' }}
+                                aria-label="Email"
+                            >
+                                <Mail size={28} />
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
