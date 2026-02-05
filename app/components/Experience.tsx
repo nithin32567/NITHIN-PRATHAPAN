@@ -4,7 +4,6 @@ import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Briefcase, Calendar } from 'lucide-react';
-import Lanyard from './Lanyard';
 import StarBorder from './StarBorder';
 
 const experienceData = [

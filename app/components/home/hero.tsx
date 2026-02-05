@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useRef } from 'react'
-import { Github, Linkedin, Mail } from 'lucide-react'
+import { Github, Linkedin, Mail, Download, Eye } from 'lucide-react'
 
 import Navbar from '../layout/Navbar'
 import ProfileCard from './ProfileCard'
@@ -15,6 +15,7 @@ const Hero = () => {
     const footerRef = useRef<HTMLDivElement | null>(null)
     const imageRef = useRef<HTMLDivElement | null>(null)
     const buttonRef = useRef<HTMLButtonElement | null>(null)
+    const resumeRef = useRef<HTMLDivElement | null>(null)
 
     useEffect(() => {
         if (!tl.current) return
@@ -43,9 +44,9 @@ const Hero = () => {
                 { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" },
                 "-=0.5"
             )
-            .fromTo(buttonRef.current,
+            .fromTo([buttonRef.current, resumeRef.current],
                 { y: 30, opacity: 0 },
-                { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
+                { y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: "power3.out" },
                 "-=0.5"
             )
 
@@ -85,6 +86,27 @@ const Hero = () => {
                             <div className="absolute top-full left-[-10%] w-[120%] h-[300%] bg-brand-light rounded-[100%] transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-top-full" />
                         </button>
 
+                        <div ref={resumeRef} className="flex items-center gap-4 mt-4">
+                            <a
+                                href="/resume/Nithin resume 2026.pdf"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 text-[10px] md:text-xs font-mono font-medium uppercase tracking-widest text-brand-text/60 hover:text-brand-text transition-colors group"
+                            >
+                                <Eye size={14} className="group-hover:scale-110 transition-transform duration-300" />
+                                <span>View CV</span>
+                            </a>
+                            <span className="text-brand-text/30">|</span>
+                            <a
+                                href="/resume/Nithin resume 2026.pdf"
+                                download="Nithin_Prathapan_Resume.pdf"
+                                className="flex items-center gap-2 text-[10px] md:text-xs font-mono font-medium uppercase tracking-widest text-brand-text/60 hover:text-brand-text transition-colors group"
+                            >
+                                <Download size={14} className="group-hover:translate-y-0.5 transition-transform duration-300" />
+                                <span>Download</span>
+                            </a>
+                        </div>
+
                         <div className="flex items-center gap-6 mt-8">
                             <a
                                 href="https://github.com/nithin32567"
@@ -120,7 +142,7 @@ const Hero = () => {
             </div>
 
             <div
-                className="grid grid-cols-1 md:grid-cols-3 items-end px-4 sm:px-6 md:px-12 pb-8 md:pb-12 w-full gap-8 md:gap-0"
+                className="grid grid-cols-1 md:grid-cols-3 items-center md:items-end px-4 sm:px-6 md:px-12 pb-8 md:pb-12 w-full gap-8 md:gap-0"
             >
                 <div className="hidden md:block"></div>
 
@@ -130,7 +152,7 @@ const Hero = () => {
                         name=""
                         title=""
                         handle="nithin_prathapan"
-                        className="max-w-[280px] md:max-w-[360px]"
+                        className="max-w-[280px] md:max-w-[360px] h-[400px] md:h-[540px] aspect-[0.718]"
                     />
                 </div>
 

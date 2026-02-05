@@ -1,11 +1,13 @@
 import React from 'react'
 import Hero from './components/home/hero'
-import SelectedWorks from './components/home/SelectedWorks'
-import About from './components/home/About'
-import Skills from './components/home/Skills'
-import Services from './components/home/Services'
-import Experience from './components/Experience'
-import Contact from './components/home/Contact'
+import dynamic from 'next/dynamic'
+
+const SelectedWorks = dynamic(() => import('./components/home/SelectedWorks'))
+const About = dynamic(() => import('./components/home/About'))
+const Skills = dynamic(() => import('./components/home/Skills'))
+const Services = dynamic(() => import('./components/home/Services'))
+const Experience = dynamic(() => import('./components/Experience'))
+const Contact = dynamic(() => import('./components/home/Contact'))
 
 const page = () => {
 

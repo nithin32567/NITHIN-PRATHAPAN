@@ -142,7 +142,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
 
             const stillFar = Math.abs(targetX - currentX) > 0.05 || Math.abs(targetY - currentY) > 0.05;
 
-            if (stillFar || document.hasFocus()) {
+            if (stillFar) {
                 rafId = requestAnimationFrame(step);
             } else {
                 running = false;
@@ -449,13 +449,10 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                     }}
                 />
             )}
-            <div ref={shellRef} className="relative z-1 group">
+            <div ref={shellRef} className="relative z-1 group w-full h-full">
                 <section
-                    className="grid relative overflow-hidden backface-hidden"
+                    className="grid relative overflow-hidden backface-hidden w-full h-full"
                     style={{
-                        height: '80svh',
-                        maxHeight: '540px',
-                        aspectRatio: '0.718',
                         borderRadius: cardRadius,
                         backgroundBlendMode: 'color-dodge, normal, normal, normal',
                         boxShadow:
@@ -498,11 +495,11 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                         <div
                             className="overflow-visible backface-hidden"
                             style={{
-                                mixBlendMode: 'luminosity',
                                 transform: 'translateZ(2px)',
                                 gridArea: '1 / -1',
                                 borderRadius: cardRadius,
-                                pointerEvents: 'none'
+                                pointerEvents: 'none',
+                                zIndex: 5
                             }}
                         >
                             <Image
@@ -619,7 +616,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                     </div>
                 </section>
             </div>
-        </div>
+        </div >
     );
 };
 

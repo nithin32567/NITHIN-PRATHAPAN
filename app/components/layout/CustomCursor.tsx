@@ -300,7 +300,7 @@ const CustomCursor = () => {
             {/* The Jelly Blob (Follower) */}
             <div
                 ref={followerRef}
-                className="fixed top-0 left-0 border-[3px] border-white bg-white/20 pointer-events-none box-border will-change-transform mix-blend-difference opacity-0"
+                className="fixed top-0 left-0 border border-white bg-white/20 pointer-events-none box-border will-change-transform mix-blend-difference opacity-0"
             />
 
             {/* The Dot (Cursor) */}

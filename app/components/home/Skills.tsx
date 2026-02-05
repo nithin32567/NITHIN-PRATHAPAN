@@ -242,7 +242,7 @@ export default function Skills() {
             <div className="absolute inset-0 z-0">
                 <DotGrid
                     dotSize={2}
-                    gap={10}
+                    gap={30}
                     baseColor="#"
                     activeColor="#ffe53d"
                     proximity={150}
@@ -270,7 +270,7 @@ export default function Skills() {
 
             {/* 3. Foreground Layer: 3D Canvas */}
             <div className="absolute inset-0 z-20">
-                <Canvas shadows gl={{ antialias: true, alpha: true }} style={{ background: 'transparent' }}>
+                <Canvas dpr={[1, 1.5]} performance={{ min: 0.5 }} shadows gl={{ antialias: false, alpha: true, stencil: false, depth: false }} style={{ background: 'transparent' }}>
                     <PerspectiveCamera makeDefault position={[0, 0, 15]} fov={fov} />
                     {/* <ambientLight intensity={0.5} /> */}
                     <pointLight position={[10, 10, 10]} intensity={1} />
