@@ -1,18 +1,18 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import { Briefcase, Calendar } from 'lucide-react';
 import StarBorder from './StarBorder';
 
 const experienceData = [
     {
         id: 1,
-        year: '2025-2026',
+        year: '2024-2026',
         title: 'MERN Stack Developer',
-        company: 'Novavi Pvt. Ltd',
-        description: 'Spearheaded full-stack development using MongoDB, Express, React, and Node.js. Delivered scalable solutions for enterprise clients.',
+        company: 'Velense',
+        description: 'Spearheaded full-stack development using MongoDB, Express, React, Next.js and Node.js. Delivered scalable solutions for enterprise clients.',
         icon: Briefcase,
         worktype: 'Full-time - onsite',
         location: "Kochi, Kerala"
@@ -34,9 +34,7 @@ const Experience = () => {
     const titleRef = useRef<HTMLHeadingElement>(null);
     const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-    useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
-
+    useGSAP(() => {
         if (titleRef.current) {
             gsap.fromTo(titleRef.current,
                 { opacity: 0, y: 50 },
@@ -69,7 +67,7 @@ const Experience = () => {
                 );
             }
         });
-    }, []);
+    }, { scope: containerRef });
 
     return (
         <section id="experience" ref={containerRef} className="relative w-full min-h-screen bg-gray-950 text-white py-12 md:py-24 overflow-hidden z-20 border-t border-white/10">

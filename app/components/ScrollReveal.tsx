@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useMemo } from 'react';
+import { useRef, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,6 +31,7 @@ const ScrollReveal = ({
     textClassName = '',
     rotationEnd = 'bottom bottom',
     wordAnimationEnd = 'bottom bottom'
+
 }: ScrollRevealProps) => {
     const containerRef = useRef<HTMLHeadingElement>(null);
 
@@ -45,12 +47,13 @@ const ScrollReveal = ({
         });
     }, [children]);
 
-    useEffect(() => {
+    useGSAP(() => {
         const el = containerRef.current;
         if (!el) return;
 
         const scroller = scrollContainerRef && scrollContainerRef.current ? scrollContainerRef.current : window;
 
+        // Animate the container rotation
         gsap.fromTo(
             el,
             { transformOrigin: '0% 50%', rotate: baseRotation },
@@ -69,9 +72,10 @@ const ScrollReveal = ({
 
         const wordElements = el.querySelectorAll('.word');
 
+        // Animate individual word opacity
         gsap.fromTo(
             wordElements,
-            { opacity: baseOpacity, willChange: 'opacity' },
+            { opacity: baseOpacity },
             {
                 ease: 'none',
                 opacity: 1,
@@ -86,6 +90,7 @@ const ScrollReveal = ({
             }
         );
 
+        // Animate individual word blur
         if (enableBlur) {
             gsap.fromTo(
                 wordElements,
@@ -104,17 +109,18 @@ const ScrollReveal = ({
                 }
             );
         }
-
-        return () => {
-            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-        };
-    }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength]);
+    }, {
+        dependencies: [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength],
+        scope: containerRef,
+        revertOnUpdate: true
+    });
 
     return (
         <h2 ref={containerRef} className={`my-5 ${containerClassName}`}>
-            <p className={`text-[clamp(1.6rem,4vw,3rem)] leading-normal font-semibold text-white ${textClassName}`}>{splitText}</p>
+            <p className={`text-[clamp(3rem,2vw,1rem)] leading-0.5 font-semibold text-[#6A7282] ${textClassName}`}>{splitText}</p>
         </h2>
     );
 };
 
 export default ScrollReveal;
+

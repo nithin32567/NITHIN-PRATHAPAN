@@ -139,34 +139,57 @@ const DotGrid: React.FC<DotGridProps> = ({
         const draw = () => {
             const canvas = canvasRef.current;
             if (!canvas) return;
-            const ctx = canvas.getContext('2d');
+            const ctx = canvas.getContext('2d', { alpha: false }); // Optimization: disable alpha if not needed, but here it might be needed for background. Actually, background is black.
             if (!ctx) return;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Clear with background color to avoid transparent blending overhead if possible
+            ctx.fillStyle = "#000000";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             const { x: px, y: py } = pointerRef.current;
+            const dots = dotsRef.current;
 
-            for (const dot of dotsRef.current) {
-                const ox = dot.cx + dot.xOffset;
-                const oy = dot.cy + dot.yOffset;
+            // Group 1: Static base dots (no offset, base color)
+            // Group 2: Moving or Active dots
+            const movingOrActiveDots: { dot: Dot, color: string }[] = [];
+            
+            ctx.beginPath();
+            ctx.fillStyle = baseColor;
+            
+            for (let i = 0; i < dots.length; i++) {
+                const dot = dots[i];
                 const dx = dot.cx - px;
                 const dy = dot.cy - py;
                 const dsq = dx * dx + dy * dy;
+                const isMoving = dot.xOffset !== 0 || dot.yOffset !== 0;
+                const isActive = dsq <= proxSq;
 
-                let style = baseColor;
-                if (dsq <= proxSq) {
-                    const dist = Math.sqrt(dsq);
-                    const t = 1 - dist / proximity;
-                    const r = Math.round(baseRgb.r + (activeRgb.r - baseRgb.r) * t);
-                    const g = Math.round(baseRgb.g + (activeRgb.g - baseRgb.g) * t);
-                    const b = Math.round(baseRgb.b + (activeRgb.b - baseRgb.b) * t);
-                    style = `rgb(${r},${g},${b})`;
+                if (!isMoving && !isActive) {
+                    // Batch draw static base dots
+                    ctx.moveTo(dot.cx + dotSize / 2, dot.cy);
+                    ctx.arc(dot.cx, dot.cy, dotSize / 2, 0, Math.PI * 2);
+                } else {
+                    let color = baseColor;
+                    if (isActive) {
+                        const dist = Math.sqrt(dsq);
+                        const t = 1 - dist / proximity;
+                        const r = Math.round(baseRgb.r + (activeRgb.r - baseRgb.r) * t);
+                        const g = Math.round(baseRgb.g + (activeRgb.g - baseRgb.g) * t);
+                        const b = Math.round(baseRgb.b + (activeRgb.b - baseRgb.b) * t);
+                        color = `rgb(${r},${g},${b})`;
+                    }
+                    movingOrActiveDots.push({ dot, color });
                 }
+            }
+            ctx.fill();
 
-                ctx.save();
-                ctx.translate(ox, oy);
-                ctx.fillStyle = style;
-                ctx.fill(circlePath);
-                ctx.restore();
+            // Draw moving or active dots
+            for (let i = 0; i < movingOrActiveDots.length; i++) {
+                const { dot, color } = movingOrActiveDots[i];
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(dot.cx + dot.xOffset, dot.cy + dot.yOffset, dotSize / 2, 0, Math.PI * 2);
+                ctx.fill();
             }
 
             rafId = requestAnimationFrame(draw);
@@ -174,7 +197,8 @@ const DotGrid: React.FC<DotGridProps> = ({
 
         draw();
         return () => cancelAnimationFrame(rafId);
-    }, [proximity, baseColor, activeRgb, baseRgb, circlePath]);
+    }, [proximity, baseColor, activeRgb, baseRgb, circlePath, dotSize]);
+
 
     useEffect(() => {
         buildGrid();
@@ -303,4 +327,4 @@ const DotGrid: React.FC<DotGridProps> = ({
     );
 };
 
-export default DotGrid;
+export default React.memo(DotGrid);

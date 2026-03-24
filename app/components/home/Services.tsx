@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import {
     Code2,
     Server,
@@ -63,9 +63,7 @@ export default function Services() {
     const titleRef = useRef<HTMLHeadingElement>(null);
     const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-    useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
-
+    useGSAP(() => {
         if (titleRef.current) {
             gsap.fromTo(titleRef.current,
                 { opacity: 0, y: 50 },
@@ -98,7 +96,7 @@ export default function Services() {
                 );
             }
         });
-    }, []);
+    }, { scope: containerRef });
 
     return (
         <section ref={containerRef} className="relative w-full min-h-screen bg-black text-white py-12 md:py-24 z-20 border-t border-white/10">
@@ -142,7 +140,7 @@ export default function Services() {
                                     </div>
                                 </div>
 
-                                <h3 className="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
+                                <h3 className="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-linear-to-r from-white to-gray-500">
                                     {service.title}
                                 </h3>
 

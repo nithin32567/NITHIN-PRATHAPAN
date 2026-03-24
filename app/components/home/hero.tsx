@@ -76,7 +76,8 @@ const Hero = () => {
                 <div ref={contentRef} className="mt-8 md:mt-16 flex flex-col md:flex-row md:items-end gap-6 md:gap-24">
                     <div className="max-w-md">
                         <p className="text-sm md:text-base leading-relaxed font-medium">
-                            Open to job opportunities worldwide. Passionate about building polished, intuitive, and thoughtful digital experiences that leave a mark.
+                            From idea to interface, I build products that people actually enjoy using.
+                            Full-stack MERN Developer obsessed with performance, clarity, and impact.
                         </p>
                         <button
                             ref={buttonRef}

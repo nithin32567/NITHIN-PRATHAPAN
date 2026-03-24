@@ -6,12 +6,15 @@ import {
     Float,
     Html,
     PerspectiveCamera,
-    ContactShadows
+    ContactShadows,
+    Image as DreiImage,
+    Billboard
 } from '@react-three/drei';
 import * as THREE from 'three';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import { Server, Workflow, Rocket, Shield, Database, Repeat, Globe, Kanban, Users } from 'lucide-react';
+
 import DotGrid from '../react-bits/DotGrid';
 
 import java from '@/public/java.png'
@@ -25,7 +28,7 @@ const skills = [
     { name: 'Angular', color: '#dd0031', icon: 'angular' },
     { name: 'JavaScript', color: '#f7df1e', icon: 'javascript' },
     { name: 'HTML', color: '#E34F26', icon: 'html5' },
-    { name: 'CSS', color: '#1572B6', icon: 'CSS' },
+    { name: 'CSS', color: '#1572B6', icon: 'css' },
     { name: 'Tailwind', color: '#06B6D4', icon: 'tailwindcss' },
     { name: 'Python', color: '#3776ab', icon: 'python' },
     { name: 'C', color: '#00599c', icon: 'c' },
@@ -42,7 +45,7 @@ const skills = [
     { name: 'Material UI', color: '#00C7B7', icon: 'mui' },
     { name: 'GOLANG', color: '#00C7B7', icon: 'go' },
     // { name: 'AWS', color: '#FF9900', icon: 'aws' },
-    { name: 'GSAP', color: '#00C7B7', icon: 'gsap' },
+    { name: 'GSAP', color: '#00C7B7', icon: 'greensock' },
     { name: 'Framer Motion', color: '#00C7B7', icon: 'framer' },
     { name: 'Bootstrap', color: '#00C7B7', icon: 'bootstrap' },
     { name: 'JQuery', color: '#00C7B7', icon: 'jquery' },
@@ -84,30 +87,17 @@ const skills = [
 
 // ... (imports remain)
 
-function SkillNode({ name, color, icon, position, index, total, ...props }: { name: string, color: string, icon: string | React.ComponentType<{ size: number; className?: string }> | { src: string }, position: [number, number, number], index: number, total: number }) {
+function SkillNode({ name, color, icon, position, ...props }: { name: string, color: string, icon: string | React.ComponentType<{ size: number; className?: string }> | { src: string }, position: [number, number, number] }) {
     const meshRef = useRef<THREE.Mesh>(null);
     const [hovered, setHovered] = useState(false);
 
-    React.useEffect(() => {
-        // Simple visibility check
-        if (meshRef.current) {
-            meshRef.current.scale.set(1, 1, 1);
-        }
-    }, [index, total]);
-
-    useFrame((state) => {
-        if (meshRef.current) {
-            meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.5 + position[0]) * 0.2;
-            meshRef.current.rotation.y = Math.cos(state.clock.elapsedTime * 0.5 + position[1]) * 0.2;
-        }
-    });
-
     const isImageIcon = typeof icon === 'object' && icon !== null && 'src' in icon;
-    const IconComp = typeof icon === 'function' ? icon : null;
+    const isLucideIcon = icon && (typeof icon === 'function' || (typeof icon === 'object' && ('displayName' in (icon as any) || 'render' in (icon as any))));
+    const IconComp = isLucideIcon ? (icon as React.ComponentType<{ size: number; className?: string }>) : null;
     const iconUrl = typeof icon === 'string'
         ? `https://cdn.simpleicons.org/${icon}/${color.replace('#', '')}`
         : isImageIcon
-            ? icon.src
+            ? (icon as { src: string }).src
             : null;
 
     return (
@@ -117,32 +107,49 @@ function SkillNode({ name, color, icon, position, index, total, ...props }: { na
                     ref={meshRef}
                     onPointerOver={() => setHovered(true)}
                     onPointerOut={() => setHovered(false)}
+                    visible={true}
                 >
-                    <sphereGeometry args={[0.6, 32, 32]} />
-                    <meshBasicMaterial visible={false} />
+                    <sphereGeometry args={[0.6, 16, 16]} />
+                    <meshStandardMaterial 
+                        color={color} 
+                        transparent 
+                        opacity={hovered ? 0.3 : 0.15} 
+                        emissive={color}
+                        emissiveIntensity={hovered ? 0.4 : 0.1}
+                        depthWrite={false}
+                    />
                 </mesh>
 
-                <Html
-                    position={[0, 0, 0]}
-                    center
-                    distanceFactor={10}
-                    style={{ pointerEvents: 'none' }}
-                >
-                    <div
-                        className={`relative flex items-center justify-center w-16 h-16 md:w-24 md:h-24 transition-transform duration-300 ${hovered ? 'scale-125' : 'scale-100'}`}
-                        style={{ color: color }}
-                    >
-                        {iconUrl ? (
-                            <img src={iconUrl} alt={name} className="w-full h-full object-contain" />
-                        ) : IconComp ? (
-                            <IconComp size={96} className="w-12 h-12 md:w-24 md:h-24" />
-                        ) : null}
+                <Billboard position={[0, 0, 0.2]}>
+                    {iconUrl ? (
+                         <React.Suspense fallback={null}>
+                            <DreiImage 
+                                url={iconUrl} 
+                                transparent 
+                                scale={hovered ? 1.1 : 0.85} 
+                                opacity={hovered ? 1 : 0.8}
+                            />
+                         </React.Suspense>
+                    ) : IconComp ? (
+                        <Html center style={{ pointerEvents: 'none' }}>
+                            <div className="transition-all duration-300" style={{ color, transform: hovered ? 'scale(1.1)' : 'scale(0.85)', opacity: hovered ? 1 : 0.8 }}>
+                                <IconComp size={48} className="w-12 h-12 md:w-16 md:h-16" />
+                            </div>
+                        </Html>
+                    ) : null}
+                </Billboard>
 
-                        <div className={`absolute top-full mt-2 left-1/2 -translate-x-1/2 whitespace-nowrap bg-gray-900/80 px-2 py-1 rounded text-white text-[10px] md:text-xs font-mono tracking-widest uppercase transition-opacity duration-300 ${hovered ? 'opacity-100' : 'opacity-0'}`}>
+                {hovered && (
+                    <Html
+                        position={[0, -1.2, 0]}
+                        center
+                        style={{ pointerEvents: 'none' }}
+                    >
+                        <div className="whitespace-nowrap bg-gray-900/95 px-3 py-1.5 rounded-lg text-white text-xs font-mono tracking-widest uppercase shadow-2xl border border-white/10 animate-in fade-in zoom-in duration-200">
                             {name}
                         </div>
-                    </div>
-                </Html>
+                    </Html>
+                )}
             </group>
         </Float>
     );
@@ -191,11 +198,9 @@ function SkillCloud() {
                 return (
                     <SkillNode
                         key={i}
-                        index={i}
-                        total={skills.length}
                         name={skill.name}
                         color={skill.color}
-                        icon={skill?.icon === 'java' ? java : skill?.icon === 'visualstudiocode' ? vscode : skill?.icon}
+                        icon={skill.icon}
                         position={[x, y, z]}
                     />
                 );
@@ -220,9 +225,7 @@ export default function Skills() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    React.useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
-
+    useGSAP(() => {
         if (titleRef.current) {
             gsap.from(titleRef.current, {
                 opacity: 0,
@@ -234,16 +237,16 @@ export default function Skills() {
                 }
             });
         }
-    }, []);
+    }, { scope: containerRef });
 
     return (
-        <section ref={containerRef} className="relative w-full min-h-screen bg-black overflow-hidden py-12 md:py-24 z-20 border-t border-white/10">
+        <section ref={containerRef} className="relative w-full min-h-screen bg-black overflow-hidden py-12 md:py-24 z-10 border-t border-white/10">
             {/* 1. Background Layer: DotGrid */}
             <div className="absolute inset-0 z-0">
                 <DotGrid
                     dotSize={2}
                     gap={30}
-                    baseColor="#"
+                    baseColor="#111111"
                     activeColor="#ffe53d"
                     proximity={150}
                     speedTrigger={100}
@@ -269,17 +272,27 @@ export default function Skills() {
             </div>
 
             {/* 3. Foreground Layer: 3D Canvas */}
-            <div className="absolute inset-0 z-20">
-                <Canvas dpr={[1, 1.5]} performance={{ min: 0.5 }} shadows gl={{ antialias: false, alpha: true, stencil: false, depth: false }} style={{ background: 'transparent' }}>
+            <div className="absolute inset-0 z-0">
+                <Canvas 
+                    dpr={[1, 1.5]} 
+                    performance={{ min: 0.5 }} 
+                    gl={{ 
+                        antialias: false, 
+                        alpha: true, 
+                        stencil: false, 
+                        depth: true,
+                        powerPreference: "high-performance"
+                    }} 
+                    style={{ background: 'transparent' }}
+                >
                     <PerspectiveCamera makeDefault position={[0, 0, 15]} fov={fov} />
-                    {/* <ambientLight intensity={0.5} /> */}
+                    <ambientLight intensity={1.5} />
                     <pointLight position={[10, 10, 10]} intensity={1} />
                     <spotLight position={[-10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
 
-                    <Suspense fallback={null}>
+                    <Suspense fallback={<Html center><div className="text-white/20 animate-pulse uppercase tracking-[0.2em] text-xs">Loading Skills...</div></Html>}>
                         <SkillCloud />
                         <ContactShadows position={[0, -10, 0]} opacity={0.4} scale={20} blur={2.5} far={10} />
-                        {/* Removed Environment to avoid network fetching issues for now */}
                     </Suspense>
 
                     <Rig />

@@ -1,8 +1,10 @@
 
 "use client";
 
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+
 import { ArrowUpRight, Sparkles } from 'lucide-react';
 import Orb from '../Orb';
 import Link from 'next/link';
@@ -10,7 +12,7 @@ import Link from 'next/link';
 const Contact = () => {
     const circleTextRef = useRef<SVGSVGElement>(null);
 
-    useEffect(() => {
+    useGSAP(() => {
         if (circleTextRef.current) {
             gsap.to(circleTextRef.current, {
                 rotation: 360,
@@ -20,7 +22,7 @@ const Contact = () => {
                 transformOrigin: "center center"
             });
         }
-    }, []);
+    }, { scope: circleTextRef });
 
     return (
         <section className="relative min-h-[60vh] md:min-h-[80vh] flex flex-col items-center justify-center bg-black overflow-hidden py-12 md:py-24">
@@ -79,7 +81,7 @@ const Contact = () => {
                 <div className="relative group">
                     <Link
                         href="mailto:nithinprathapan32567@gmail.com"
-                        className="inline-flex items-center justify-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full text-white transition-all duration-300 group-hover:px-8 md:group-hover:px-10"
+                        className="inline-flex items-center justify-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20  text-white transition-all duration-300 group-hover:px-8 md:group-hover:px-10"
                     >
                         <span className="font-medium text-base md:text-lg">Get in touch</span>
                         <span className="bg-white text-black p-1 rounded-full group-hover:rotate-45 transition-transform duration-300">

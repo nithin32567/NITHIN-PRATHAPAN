@@ -1,13 +1,15 @@
+"use client";
+
 import React from 'react'
 import Hero from './components/home/hero'
 import dynamic from 'next/dynamic'
 
-const SelectedWorks = dynamic(() => import('./components/home/SelectedWorks'))
-const About = dynamic(() => import('./components/home/About'))
-const Skills = dynamic(() => import('./components/home/Skills'))
-const Services = dynamic(() => import('./components/home/Services'))
-const Experience = dynamic(() => import('./components/Experience'))
-const Contact = dynamic(() => import('./components/home/Contact'))
+const SelectedWorks = dynamic(() => import('./components/home/SelectedWorks').then(mod => mod.default), { ssr: false })
+const About = dynamic(() => import('./components/home/About').then(mod => mod.default), { ssr: false })
+const Skills = dynamic(() => import('./components/home/Skills').then(mod => mod.default), { ssr: false })
+const Services = dynamic(() => import('./components/home/Services').then(mod => mod.default), { ssr: false })
+const Experience = dynamic(() => import('./components/Experience').then(mod => mod.default), { ssr: false })
+const Contact = dynamic(() => import('./components/home/Contact').then(mod => mod.default), { ssr: false })
 
 const page = () => {
 
