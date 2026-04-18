@@ -57,52 +57,62 @@ const projects = [
 const ProjectCard = React.memo(({ project, index }: { project: typeof projects[0], index: number }) => {
     return (
         <div
-            className="project-card sticky top-0 w-full h-screen flex flex-col border-t border-white/20 overflow-hidden bg-black transition-all duration-500"
+            className="project-card sticky w-full h-screen md:h-screen flex flex-col border-t border-white/20 overflow-hidden bg-black transition-all duration-500"
             style={{
                 backgroundColor: project.color,
-                top: `${index * 150}px`,
+                top: `calc(${index} * var(--stack-offset, 35px))`,
                 zIndex: index + 1
-            }}
+            } as React.CSSProperties}
         >
+            <style jsx>{`
+                .project-card {
+                    --stack-offset: 35px;
+                }
+                @media (min-width: 768px) {
+                    .project-card {
+                        --stack-offset: 100px;
+                    }
+                }
+            `}</style>
             <div className="container mx-auto px-4 md:px-6 h-full relative flex flex-col pt-10">
-                <div className="flex flex-row items-center gap-8 md:gap-16 mb-12 select-none">
-                    <span className="text-6xl md:text-8xl font-bold leading-none text-white/40">
+                <div className="flex flex-row items-center gap-4 md:gap-16 mb-4 md:mb-12 select-none">
+                    <span className="text-4xl md:text-8xl font-bold leading-none text-white/40">
                         0{index + 1}
                     </span>
-                    <h3 className="text-4xl md:text-7xl font-bold leading-none tracking-tight uppercase">
+                    <h3 className="text-2xl md:text-7xl font-bold leading-none tracking-tight uppercase">
                         {project.title}
                     </h3>
                 </div>
 
-                <div className="flex flex-col md:flex-row gap-8 md:gap-20 flex-1 overflow-hidden pb-10">
-                    <div className="flex-1 flex flex-col justify-start pt-4">
-                        <div>
-                            <p className="text-lg md:text-2xl text-gray-300 leading-relaxed max-w-xl">
+                <div className="flex flex-col md:flex-row gap-6 md:gap-20 flex-1 overflow-y-auto md:overflow-hidden pb-32 md:pb-10 scrollbar-hide">
+                    <div className="flex-1 flex flex-col justify-start md:pt-4">
+                        <div className="space-y-4 md:space-y-0">
+                            <p className="text-base md:text-2xl text-gray-300 leading-relaxed max-w-xl">
                                 {project.description}
                             </p>
-                            <div className="flex flex-wrap gap-3 mt-8 md:mt-12">
-                                <span className="px-4 py-2 border border-white/20 rounded-full text-sm uppercase tracking-wider bg-white/5 backdrop-blur-sm">
+                            <div className="flex flex-wrap gap-2 md:gap-3 mt-4 md:mt-12">
+                                <span className="px-3 py-1.5 md:px-4 md:py-2 border border-white/20 rounded-full text-xs md:text-sm uppercase tracking-wider bg-white/5 backdrop-blur-sm">
                                     {project.category}
                                 </span>
-                                <span className="px-4 py-2 border border-white/20 rounded-full text-sm uppercase tracking-wider bg-white/5 backdrop-blur-sm">
+                                <span className="px-3 py-1.5 md:px-4 md:py-2 border border-white/20 rounded-full text-xs md:text-sm uppercase tracking-wider bg-white/5 backdrop-blur-sm">
                                     {project.year}
                                 </span>
                             </div>
                         </div>
-                        <div className="mt-12">
+                        <div className="mt-8 md:mt-12 mb-8 md:mb-0">
                             <button
                                 onClick={() => window.open(project.link, '_blank')}
-                                className="group inline-flex items-center gap-3 text-xl font-medium hover:text-white transition-colors"
+                                className="group inline-flex items-center gap-3 text-lg md:text-xl font-medium hover:text-white transition-colors"
                             >
                                 View Project
                                 <div className="bg-white text-black rounded-full p-2 group-hover:scale-110 transition-transform duration-300">
-                                    <ArrowUpRight size={20} />
+                                    <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5" />
                                 </div>
                             </button>
                         </div>
                     </div>
 
-                    <div className="flex-1 relative w-full h-[40vh] md:h-auto md:max-h-[60vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+                    <div className="flex-1 relative w-full aspect-4/3 md:aspect-auto md:h-auto md:max-h-[60vh] rounded-xl overflow-hidden border border-white/10 shadow-2xl mb-12 md:mb-0">
                         <Image
                             src={project.image}
                             alt={project.title}
@@ -129,12 +139,15 @@ export default function SelectedWorks() {
         cards.forEach((card, index) => {
             if (index === projects.length - 1) return;
 
+            const isMobile = window.innerWidth < 768;
+            const offset = isMobile ? 35 : 100;
+
             gsap.to(card, {
-                scale: 0.9,
-                opacity: 0.5,
+                scale: isMobile ? 0.95 : 0.9,
+                opacity: 0.3,
                 scrollTrigger: {
                     trigger: card,
-                    start: "top top",
+                    start: `top ${index * offset}px`,
                     end: "bottom top",
                     scrub: true,
                 }

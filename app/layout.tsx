@@ -30,8 +30,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${mono.variable}`}>
-      <body className="font-sans">
+    <html lang="en" className={`${inter.variable} ${mono.variable}`} suppressHydrationWarning>
+      <body className="font-sans" suppressHydrationWarning>
         <GsapProvider>
           <SmoothScroll>
             <CustomCursor />

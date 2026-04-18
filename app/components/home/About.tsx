@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ScrollReveal from '../ScrollReveal';
 import DotGrid from '../react-bits/DotGrid';
 
 const About = () => {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     return (
         <section className="relative w-full bg-black text-white py-12 md:py-24 overflow-hidden">
 
@@ -24,7 +33,7 @@ const About = () => {
             </div>
 
             {/* Content Layer */}
-            <div className="relative z-10 max-w-[80%] mx-auto px-4">
+            <div className="relative z-10 max-w-[95%] md:max-w-[80%] mx-auto px-4 md:px-6">
                 <h2 className="text-5xl md:text-[8rem] font-bold leading-none tracking-tighter mb-4 text-white">
                     ABOUT <br />
                     <span className="text-gray-500">ME</span>
@@ -34,12 +43,12 @@ const About = () => {
                     <span></span>
                 </div>
 
-                <div className="mt-12 md:mt-20">
+                <div className="mt-8 md:mt-20">
                     <ScrollReveal
-                        baseOpacity={20}
+                        baseOpacity={0.1}
                         enableBlur={true}
-                        baseRotation={10}
-                        blurStrength={20}
+                        baseRotation={isMobile ? 3 : 10}
+                        blurStrength={isMobile ? 10 : 20}
                         textClassName="leading-relaxed"
                     >
                         I’m a full-stack developer passionate about building scalable, user-friendly web applications. I work across the stack using React, Next.js, Angular, Node.js, and TypeScript to create clean interfaces and reliable APIs. I focus on writing maintainable code, designing responsive UIs with modern styling tools, and delivering smooth user experiences. On the backend, I build secure RESTful services and work with both SQL and NoSQL databases. I’m comfortable with modern tooling, deployment workflows, and collaborative Agile environments. I enjoy continuous learning and turning ideas into well-engineered, production-ready products.
