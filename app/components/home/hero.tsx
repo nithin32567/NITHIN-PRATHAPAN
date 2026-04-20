@@ -102,7 +102,7 @@ const Hero = () => {
 
                         <div ref={resumeRef} className="flex items-center gap-4 mt-4">
                             <a
-                                href="/resume/Nithin Prathapan CV.pdf"
+                                href="/resume/Nithin_Prathapan_CV.pdf"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 text-[10px] md:text-xs font-mono font-medium uppercase tracking-widest text-brand-text/60 hover:text-brand-text transition-colors group"
@@ -112,7 +112,7 @@ const Hero = () => {
                             </a>
                             <span className="text-brand-text/30">|</span>
                             <a
-                                href="/resume/Nithin Prathapan CV.pdf"
+                                href="/resume/Nithin_Prathapan_CV.pdf"
                                 download="Nithin_Prathapan_Resume.pdf"
                                 className="flex items-center gap-2 text-[10px] md:text-xs font-mono font-medium uppercase tracking-widest text-brand-text/60 hover:text-brand-text transition-colors group"
                             >
