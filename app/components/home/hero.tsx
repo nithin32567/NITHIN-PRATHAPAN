@@ -5,6 +5,7 @@ import { Github, Linkedin, Mail, Download, Eye } from 'lucide-react'
 
 import Navbar from '../layout/Navbar'
 import ProfileCard from './ProfileCard'
+import gsap from 'gsap'
 import { useGsapTimeline } from '@/app/context/gsapContext'
 
 const Hero = () => {
