@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import Link from 'next/link'
 import { useGsapTimeline } from '@/app/context/gsapContext'
 import StaggeredMenu from './StaggeredMenu'
@@ -32,14 +32,16 @@ const Navbar = () => {
     { label: 'LinkedIn', link: 'https://www.linkedin.com/in/nithin-prathapan' }
   ];
 
-  useEffect(() => {
+  const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect
+
+  useIsomorphicLayoutEffect(() => {
     if (!tl.current) return
     if (navbarRef.current) {
       tl.current.fromTo(
         navbarRef.current,
         { opacity: 0, y: -20 },
         { opacity: 1, y: 0, duration: 1, ease: "power4.out" },
-        0.5
+        0.2
       )
     }
   }, [tl])
@@ -48,6 +50,7 @@ const Navbar = () => {
     <>
       <nav
         ref={navbarRef}
+        style={{ opacity: 0 }}
         className='hidden md:flex justify-between items-center px-6 md:px-12 py-8 w-full uppercase text-[10px] md:text-xs font-mono tracking-[0.2em]'
       >
         <div className="font-semibold text-black">

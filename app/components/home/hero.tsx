@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import { Github, Linkedin, Mail, Download, Eye } from 'lucide-react'
 
 import Navbar from '../layout/Navbar'
@@ -17,44 +17,57 @@ const Hero = () => {
     const buttonRef = useRef<HTMLButtonElement | null>(null)
     const resumeRef = useRef<HTMLDivElement | null>(null)
 
-    useEffect(() => {
+    const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect
+
+    useIsomorphicLayoutEffect(() => {
         if (!tl.current) return
 
         const words = containerRef.current?.querySelectorAll(".h-word")
         if (!words || words.length === 0) return
 
+        // Kill any existing animations on these specific elements to prevent overlaps during re-renders
+        gsap.killTweensOf([containerRef.current, words, contentRef.current, imageRef.current, footerRef.current, buttonRef.current, resumeRef.current])
+
         tl.current
             .fromTo(containerRef.current,
-                { opacity: 0, y: 1000, borderRadius: "100%" },
-                { opacity: 1, y: 0, duration: 1.2, borderRadius: "0", ease: "power4.out" },
-                0.2
+                { opacity: 0, y: 100, borderRadius: "50%" },
+                { opacity: 1, y: 0, duration: 1.5, borderRadius: "0", ease: "expo.out" },
+                0
             )
             .fromTo(words,
                 { y: "110%", opacity: 0 },
-                { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" },
-                "-=0.4"
+                { y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: "power4.out" },
+                0.4
             )
             .fromTo(contentRef.current,
-                { y: 50, opacity: 0 },
+                { y: 30, opacity: 0 },
                 { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
-                "-=0.8"
+                0.8
             )
             .fromTo([imageRef.current, footerRef.current],
-                { y: 30, opacity: 0 },
-                { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" },
-                "-=0.5"
+                { y: 40, opacity: 0, scale: 0.95 },
+                { y: 0, opacity: 1, scale: 1, duration: 1.2, stagger: 0.2, ease: "expo.out" },
+                1.0
             )
             .fromTo([buttonRef.current, resumeRef.current],
-                { y: 30, opacity: 0 },
+                { y: 20, opacity: 0 },
                 { y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: "power3.out" },
-                "-=0.5"
+                1.2
             )
 
         tl.current.play()
+
+        return () => {
+            tl.current?.kill()
+        }
     }, [tl])
 
     return (
-        <section ref={containerRef} className="relative min-h-screen flex flex-col bg-brand-bg text-brand-text overflow-hidden">
+        <section 
+            ref={containerRef} 
+            className="relative min-h-screen flex flex-col bg-brand-bg text-brand-text overflow-hidden"
+            style={{ opacity: 0 }}
+        >
             <Navbar />
 
             <div className="flex-1 flex flex-col justify-center px-4 sm:px-6 md:px-12 pt-20 pb-12 md:pb-20">
@@ -89,7 +102,7 @@ const Hero = () => {
 
                         <div ref={resumeRef} className="flex items-center gap-4 mt-4">
                             <a
-                                href="/resume/Nithin resume 2026.pdf"
+                                href="/resume/Nithin Prathapan CV.pdf"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 text-[10px] md:text-xs font-mono font-medium uppercase tracking-widest text-brand-text/60 hover:text-brand-text transition-colors group"
@@ -99,7 +112,7 @@ const Hero = () => {
                             </a>
                             <span className="text-brand-text/30">|</span>
                             <a
-                                href="/resume/Nithin resume 2026.pdf"
+                                href="/resume/Nithin Prathapan CV.pdf"
                                 download="Nithin_Prathapan_Resume.pdf"
                                 className="flex items-center gap-2 text-[10px] md:text-xs font-mono font-medium uppercase tracking-widest text-brand-text/60 hover:text-brand-text transition-colors group"
                             >
